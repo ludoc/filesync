@@ -1,3 +1,5 @@
+
+
 <!doctype html>
 <html ng-app="FileSync">
   <head>
@@ -10,9 +12,21 @@
 
   <body>
     <div class="container" ng-controller="SocialCtrl as social">
-      <div ng-repeat="viewer in social.viewers" class="animate">
+      <div ng-repeat="viewer in social.viewers track by $index" class="animate">
         {{ viewer }}
       </div>
+
+      <div class="wrap" style="overflow:auto;max-height:100px;">
+        <div ng-repeat="message in social.messages track by $index" class="animate">
+          {{ message }}
+        </div>
+      </div>
+      <form ng-submit="social.sendMessage()">
+        <input type="text"
+        ng-model="social.message"
+        name="name"
+        placeholder="What are you doing?" />
+      </form>
     </div>
     <div class="container" ng-controller="HistoryCtrl as history">
       <div class="history">
@@ -76,3 +90,5 @@
   <script src="/app/VisibilityService.js" type="text/javascript"></script>
   </body>
 </html>
+
+

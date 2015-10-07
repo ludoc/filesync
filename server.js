@@ -50,9 +50,24 @@ function Viewers(sio) {
     }
   };
 }
+function Messages(sio) {
+  var data = [];
+
+  function notifyChanges() {
+    sio.emit('social:message', data);
+  }
+
+  return {
+    add: function add(message) {
+      data.push(message);
+      notifyChanges();
+    }
+  };
+}
+
 
 var viewers = Viewers(sio);
-
+var messages = Messages(sio);
 
 // @todo extract in its own
 sio.on('connection', function(socket) {
@@ -62,6 +77,11 @@ sio.on('connection', function(socket) {
     socket.nickname = nickname;
     viewers.add(nickname);
     console.log('new viewer with nickname %s', nickname, viewers);
+  });
+  socket.on('message:send', function(message) {
+    console.log(message);
+    messages.add(message);
+
   });
 
   socket.on('disconnect', function() {

@@ -34,6 +34,9 @@ angular.module('FileSync')
       onViewersUpdated: function(f) {
         socket.on('viewers:updated', f);
       },
+      onMessageUpdated: function(f) {
+	socket.on('social:message', f);
+      },
 
       onFileChanged: function(f) {
         _onFileChanged = f;
@@ -42,6 +45,10 @@ angular.module('FileSync')
       onVisibilityStatesChanged: function(f) {
         _onVisibilityStatesChanged = f;
       },
+
+     messageUpdate: function(f) {
+	socket.emit('message:send', f);
+     }, 
 
       userChangedState: function(state) {
         socket.emit('user-visibility:changed', state);
