@@ -9,7 +9,12 @@ var _ = require('lodash');
 var logger = require('winston');
 var config = require('./config')(logger);
 
+var passport = require('passport');
+
 app.use(express.static(path.resolve(__dirname, './public')));
+require('./oauth/passport')(passport);
+app.use(passport.initialize());
+require('./oauth/route.js')(app, passport);
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');

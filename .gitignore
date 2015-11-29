@@ -30,3 +30,5 @@ node_modules
 
 public/components
 .npmignore
+
+oauth/private-key.js
