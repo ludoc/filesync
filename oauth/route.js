@@ -19,9 +19,4 @@ module.exports = function(app, passport) {
       res.sendFile(path.resolve('public/login.html'));
     });
 
-  /*  app.get('/', function(req, res) {
-      console.log(req.user);
-      var path = require('path');
-      res.sendFile(path.resolve('public/index.html'));
-    });*/
   };
