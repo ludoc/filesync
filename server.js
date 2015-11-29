@@ -10,20 +10,37 @@ var logger = require('winston');
 var config = require('./config')(logger);
 
 var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
 
-app.use(express.static(path.resolve(__dirname, './public')));
+var currentUser;
+
 require('./oauth/passport')(passport);
-app.use(passport.initialize());
-require('./oauth/route.js')(app, passport);
 
-app.get('/', function(req, res) {
+app.use(cookieParser()); 
+
+app.use(session({ secret: 'someSecretKeyHere' })); 
+app.use(passport.initialize());
+app.use(passport.session());
+require('./oauth/route.js')(app, passport);
+function isAuthenticated(req, res, next) {
+  if(req.hasOwnProperty('user')){
+    if (req.user.authenticated)
+        return next();
+    }
+    res.redirect('/login');
+}
+
+app.get('/', isAuthenticated, function(req, res) {
+  currentUser = req.user;
   res.sendFile(__dirname + '/public/index.html');
 });
+
+app.use(express.static(path.resolve(__dirname, './public')));
 
 var server = app.listen(config.server.port, function() {
   logger.info('Server listening on %s', config.server.port);
 });
-
 
 var sio = io(server);
 
@@ -80,7 +97,7 @@ sio.on('connection', function(socket) {
   // console.log('nouvelle connexion', socket.id);
   socket.on('viewer:new', function(nickname) {
     socket.nickname = nickname;
-    viewers.add(nickname);
+    viewers.add(currentUser);
     console.log('new viewer with nickname %s', nickname, viewers);
   });
   socket.on('message:send', function(message) {

@@ -7,8 +7,7 @@ angular.module('FileSync')
 
     socket.on('connect', function() {
       console.log('connected');
-      var login = prompt('Nickname?');
-      socket.emit('viewer:new', login);
+      socket.emit('viewer:new', null);
     });
 
 
@@ -35,7 +34,7 @@ angular.module('FileSync')
         socket.on('viewers:updated', f);
       },
       onMessageUpdated: function(f) {
-	socket.on('social:message', f);
+	       socket.on('social:message', f);
       },
 
       onFileChanged: function(f) {
@@ -48,7 +47,7 @@ angular.module('FileSync')
 
      messageUpdate: function(f) {
 	socket.emit('message:send', f);
-     }, 
+     },
 
       userChangedState: function(state) {
         socket.emit('user-visibility:changed', state);
