@@ -59,13 +59,26 @@ function Viewers(sio) {
 
   return {
     add: function add(nickname) {
-      data.push({id: nickname.id, name: nickname.name, email: nickname.email, authType: nickname.authType});
+      var idx = data.map(function(e) { return e.id; }).indexOf(nickname.id);
+      var count = 1;
+      if (idx != -1) {
+        count++;
+        data[idx].connectionNumbers = count;
+      }
+      else{
+        data.push({id: nickname.id, name: nickname.name, email: nickname.email, authType: nickname.authType, connectionNumbers: count});
+      }
       notifyChanges();
     },
     remove: function remove(nickname) {
       var idx = data.map(function(e) { return e.id; }).indexOf(nickname);
       if (idx > -1) {
-        data.splice(idx, 1);
+        if(data[idx].connectionNumbers == 1){
+          data.splice(idx, 1);
+        }
+        else {
+          data[idx].connectionNumbers--;
+        }
       }
       notifyChanges();
       console.log('-->', data);
