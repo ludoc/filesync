@@ -24,7 +24,7 @@ module.exports = function(passport) {
   function(token, tokenSecret, profile, done) {
 
     process.nextTick(function() {
-      var st = new Student(profile.id, token, profile.emails[0].value, profile.displayName);
+      var st = new Student(profile.id, token, profile.emails[0].value, profile.displayName, 'Google');
       return done(null,st);
 
     });
@@ -42,7 +42,7 @@ passport.use(new FacebookStrategy({
 
 function(token, refreshToken, profile, done) {
   process.nextTick(function() {
-    var st = new Student(profile.id, token, profile.emails[0].value, profile.name.givenName + ' ' + profile.name.familyName);
+    var st = new Student(profile.id, token, profile.emails[0].value, profile.name.givenName + ' ' + profile.name.familyName, 'Facebook');
     return done(null,st);
   });
 
@@ -57,7 +57,7 @@ passport.use(new TwitterStrategy({
 },
 function(token, tokenSecret, profile, done) {
   process.nextTick(function() {
-    var st = new Student(profile.id, token, profile.username, profile.displayName);
+    var st = new Student(profile.id, token, profile.username, profile.displayName, 'Twitter');
     return done(null,st);
   });
 

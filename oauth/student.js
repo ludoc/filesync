@@ -1,8 +1,9 @@
-var Student = function(id, token, email, name){
+var Student = function(id, token, email, name, authType){
   this.id = id;
   this.token = token;
   this.email = email;
   this.name = name;
+  this.authType = authType;
   this.authenticated = true;
   Student.add(this);
 }
