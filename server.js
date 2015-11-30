@@ -59,11 +59,11 @@ function Viewers(sio) {
 
   return {
     add: function add(nickname) {
-      data.push({name: nickname.name, email: nickname.email, authType: nickname.authType});
+      data.push({id: nickname.id, name: nickname.name, email: nickname.email, authType: nickname.authType});
       notifyChanges();
     },
     remove: function remove(nickname) {
-      var idx = data.indexOf(nickname);
+      var idx = data.map(function(e) { return e.id; }).indexOf(nickname);
       if (idx > -1) {
         data.splice(idx, 1);
       }
@@ -96,9 +96,9 @@ sio.on('connection', function(socket) {
 
   // console.log('nouvelle connexion', socket.id);
   socket.on('viewer:new', function(nickname) {
-    socket.nickname = nickname;
+    socket.nickname = currentUser.id;
     viewers.add(currentUser);
-    console.log('new viewer with nickname %s', nickname, viewers);
+    console.log('new viewer with nickname %s',   socket.nickname, viewers);
   });
   socket.on('message:send', function(message) {
     console.log(message);
