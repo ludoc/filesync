@@ -59,7 +59,7 @@ function Viewers(sio) {
 
   return {
     add: function add(nickname) {
-      data.push(nickname);
+      data.push({name: nickname.name, email: nickname.email, authType: nickname.authType});
       notifyChanges();
     },
     remove: function remove(nickname) {
