@@ -13,9 +13,9 @@
   <body>
     <div class="container" ng-controller="SocialCtrl as social">
       <div ng-repeat="viewer in social.viewers track by $index" class="animate">
-        {{ viewer.name }}({{ viewer.connectionNumbers }} active connection) ({{ viewer.email }} from {{ viewer.authType }}) <a href="/logout">Logout</a>
+        {{ viewer.name }}({{ viewer.connectionNumbers }} active connection) ({{ viewer.email }} from {{ viewer.authType }})
       </div>
-
+ <a href="/logout">Logout</a>
       <div class="wrap" style="overflow:auto;max-height:100px;">
         <div ng-repeat="message in social.messages track by $index" class="animate">
           {{ message }}
