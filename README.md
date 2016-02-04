@@ -3,6 +3,9 @@ Unidirectional 1-N file syncing with history and *local merging* [![Build Status
 
 This is a **proof of concept** AND **a work in progress**, don't share the word, yet.
 
+# Ludovic Changelog (2015-11-30)
+-Add Facebook, Twitter, and Google authentification 
+
 # Motivation
 
 > “We are in 2015 and my students still have to copy what I wrote on a screen while I teach them something. This is a long and tedious process that slow down the lectures.
